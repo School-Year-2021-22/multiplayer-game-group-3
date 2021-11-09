@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="/room.css">
+  </head>
+  <body>
+
+    <div class="app">
+
+      <h1>User index: {{userIndex}}</h1>
+      <button @click="moveUser(-50)">Left</button>
+      <button @click="moveUser(50)">Right</button>
+      <div class="container">
+        <div
+          class="user"
+          v-for="user, i in game.users"
+          :class="{
+            'active' : i == userIndex,
+            'offline' : user.online == false,
+          }"
+          :style="{
+            top: i*30 + 'px',
+            left: user.left+'px'
+          }"
+          :key="user.id"
+          ></div>
+      </div>
+
+      <pre id="users">
+        {{game}}
+      </pre>
+      <!-- <div id="test" style="min-height: 100vh;background: red">
+      </div> -->
+  
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+      const ROOM = '<%= room %>';
+      const GAME = <%- JSON.stringify(game) %>;
+      const USER_INDEX = <%= userIndex %>;
+    </script>
+
+
+    <script src="/room.js"></script>
+      
+  </body>
+</html>

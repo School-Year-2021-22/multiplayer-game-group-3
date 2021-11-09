@@ -1,0 +1,16 @@
+.container{
+  position: relative;
+}
+.user{
+  min-height: 30px;
+  min-width: 30px;
+  background-color: aqua;
+  position: absolute;
+}
+
+.active{
+  background-color: yellow;
+}
+.offline{
+  background-color: gray;
+}
