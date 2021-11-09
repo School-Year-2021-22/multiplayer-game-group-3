@@ -11,7 +11,7 @@ app.use(express.static('public'));
 
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/game/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 const gameRoomPrefix = 'room-'
