@@ -3,7 +3,6 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const port = process.env.PORT || 3000
-const { join } = require('path')
 // eslint-disable-next-line no-unused-vars
 const development = process.env.NODE_ENV === 'development'
 
@@ -14,7 +13,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, '/views/index.ejs'))
+  res.render('index')
 })
 
 const gameRoomPrefix = 'room-'
@@ -40,7 +39,7 @@ app.get('/rooms/:gameId', (req, res) => {
     socket.join(roomName)
     // If the user is new, add it
     // eslint-disable-next-line no-undef
-    users = io.sockets.adapter.rooms.get(roomName)
+    // users = io.sockets.adapter.rooms.get(roomName)
     // let userIndex = 0
     if (!games[roomName].users.find((u) => (u.id === socket.id))) {
       const newUser = {

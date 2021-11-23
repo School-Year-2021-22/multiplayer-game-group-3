@@ -39,8 +39,14 @@
 
     <script>
       const ROOM = '<%= room %>';
-      const GAME = <%- JSON.stringify(game) %>;
-      const USER_INDEX = <%= userIndex %>;
+      const GAME = '<%- JSON.stringify(game) %>';
+      const USER_INDEX = '<%= userIndex %>';
+      window.ROOM = ROOM;
+      window.GAME = GAME;
+      window.USER_INDEX = USER_INDEX;
+      Object.freeze(window.ROOM);
+      Object.freeze(window.GAME);
+      Object.freeze(window.USER_INDEX);
     </script>
 
 
