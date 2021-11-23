@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+app.get('/homepage', (req, res) => {
+  res.render('homepage')
+})
+
 const gameRoomPrefix = 'room-'
 const games = {
 }
