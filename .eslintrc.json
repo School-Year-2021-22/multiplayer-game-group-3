@@ -13,7 +13,8 @@
         "ecmaVersion": 12
     },
     "plugins": [
-        "vue"
+        "vue",
+        "ejs"
     ],
     "rules": {
     }

@@ -1,1 +1,56 @@
-<h2 style= "color : burlywood; background: greenyellow;"></h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas style="width: 100%; height: 100%;" id="myCanvas"></canvas>
+    <script defer>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let mousePos = new Uint16Array(64);
+
+        const addLine = (point1 = [0, 0], point2 = [200, 100]) => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // console.log(...point1, ...point2);
+            ctx.beginPath(); // I still don't understand what beginPath and closePath do
+            ctx.moveTo(...point1);
+            ctx.lineTo(...point2);
+            // ctx.closePath();
+            ctx.stroke();
+        }
+
+        // addLine()
+
+        const resizer = async () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;   
+            addLine([mousePos[0], mousePos[1]], [mousePos[2], mousePos[3]]);
+        }
+
+        window.addEventListener("resize", resizer)
+        resizer();
+
+        window.addEventListener("mousemove", (event) => {
+            if (event.clientX === mousePos[2] && event.clientY === mousePos[3]) return;
+
+            const newMousePos = new Uint16Array([mousePos[2], mousePos[3], event.clientX, event.clientY]);
+            mousePos = newMousePos;
+
+            addLine([mousePos[0], mousePos[1]], [mousePos[2], mousePos[3]]);
+        });
+    </script>
+</body>
+</html>
