@@ -1,15 +1,15 @@
 const app = {
-  data() {
+  data () {
     return {
       socket: null,
-      room: ROOM,
-      game: GAME,
-      userIndex: USER_INDEX
+      room: window.ROOM,
+      game: window.GAME,
+      userIndex: window.USER_INDEX
     }
   },
   methods: {
-    moveUser(amount) {
-      this.socket.emit(this.room+'_user_update', {
+    moveUser (amount) {
+      this.socket.emit(this.room + '_user_update', {
         i: this.userIndex,
         user: {
           left: this.game.users[this.userIndex].left + amount
@@ -17,14 +17,14 @@ const app = {
       })
     }
   },
-  mounted() {
-    this.socket = io();
-    // to send: 
-    // socket.emit('chat message', input.value);    
-    this.socket.on(ROOM+'_update', (msg) => {
+  mounted () {
+    this.socket = window.io()
+    // to send:
+    // socket.emit('chat message', input.value);
+    this.socket.on(window.ROOM + '_update', (msg) => {
       this.game = msg
-    });
+    })
   }
 }
 
-Vue.createApp(app).mount('.app')
+window.Vue.createApp(app).mount('.app')
