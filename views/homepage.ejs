@@ -117,22 +117,32 @@
             const B = -1*(xDelta);
             const C = (xDelta)*yIntercept;
 
+            // /**
+            //  * @param {number} x 
+            //  * @param {number} y 
+            //  */
+            // const difference = (x, y) => {
+            //     return (A*x) + (B*y) + C;
+            // }
+
             /**
-             * @param {number} x 
-             * @param {number} y 
+             * @param {DOMRect} target 
+             * @returns {boolean}
              */
-            const difference = (x, y) => {
-                return (A*x) + (B*y) + C;
+            const slicedTarget = (target) => {
+                const topLeft = (A*target.left) + (B*target.top) + C;
+                const botRight = (A*target.right) + (B*target.bottom) + C;
+                return (topLeft > 0 && botRight < 0) || (botRight > 0 && topLeft < 0)
             }
 
-            const targetRect = document.querySelector("body > div > div > img").getBoundingClientRect();
+            // const targetRect = document.querySelector("body > div > div > img").getBoundingClientRect();
 
-            const topLeft = difference(targetRect.left, targetRect.top);
-            const botRight = difference(targetRect.right, targetRect.bottom);
-            const topRight = difference(targetRect.right, targetRect.top);
-            const botLeftRight = difference(targetRect.left, targetRect.bottom);
+            // const topLeft = difference(targetRect.left, targetRect.top);
+            // const botRight = difference(targetRect.right, targetRect.bottom);
+            // const topRight = difference(targetRect.right, targetRect.top);
+            // const botLeftRight = difference(targetRect.left, targetRect.bottom);
 
-            if (topLeft > 0 && botRight < 0) console.log("Yes!");
+            if (slicedTarget(document.querySelector("body > div > div > img").getBoundingClientRect())) console.log("Yes!");
         }
 
         // renderLines()
@@ -162,15 +172,17 @@
         //     renderLines();
         // }, 500)
 
-        // setInterval(() => {
-        //     const targetRect = document.querySelector("body > div > div > img").getBoundingClientRect();
-        //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //     ctx.beginPath();
-        //     ctx.arc(targetRect.left, targetRect.top, 5, 0, 2 * Math.PI);
-        //     ctx.arc(targetRect.right, targetRect.bottom, 5, 0, 2 * Math.PI);
-        //     ctx.fill("evenodd");
-        //     ctx.closePath();
-        // }, 100);
+        setInterval(() => {
+            const targetRect = document.querySelector("body > div > div > img").getBoundingClientRect();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.arc(targetRect.left, targetRect.top, 5, 0, 2 * Math.PI);
+            ctx.arc(targetRect.right, targetRect.bottom, 5, 0, 2 * Math.PI);
+            ctx.arc(targetRect.left, targetRect.bottom, 5, 0, 2 * Math.PI);
+            ctx.arc(targetRect.right, targetRect.top, 5, 0, 2 * Math.PI);
+            ctx.fill("evenodd");
+            ctx.closePath();
+        }, 100);
     </script>
 </body>
 </html>
