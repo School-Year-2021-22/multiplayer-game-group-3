@@ -66,6 +66,8 @@
 
             const topLeft = difference(targetRect.left, targetRect.top);
             const botRight = difference(targetRect.right, targetRect.bottom);
+            const topRight = difference(targetRect.right, targetRect.top);
+            const botLeftRight = difference(targetRect.left, targetRect.bottom);
 
             if (topLeft > 0 && botRight < 0) console.log("Yes!");
         }
@@ -81,7 +83,7 @@
         window.addEventListener("resize", resizer);
         resizer();
 
-        window.addEventListener("mousemove", (event) => {
+        window.addEventListener("click", (event) => {
             if (event.clientX === mousePos[30] && event.clientY === mousePos[31]) return;
 
             const newMousePos = new Uint16Array([...mousePos.slice(2), event.clientX, event.clientY]);
