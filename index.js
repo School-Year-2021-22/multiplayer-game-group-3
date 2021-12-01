@@ -18,7 +18,7 @@ const gameRoomPrefix = 'room-'
 
 const games = {
 }
-app.get('/rooms/:gameId', (req, res) => {
+app.get('/rooms/:gameId/:name', (req, res) => {
   //Get room name
   const roomName = gameRoomPrefix+req.params.gameId
   // If the game doesn't exsist, I'll inizialize it
@@ -31,26 +31,26 @@ app.get('/rooms/:gameId', (req, res) => {
   }
       
   let userIndex = games[roomName].users.length
+
+  const newUser = {
+    id: userIndex,
+    ready: false,
+    online: true,
+    name: req.params.name,
+    left: parseInt(Math.random() * 200),
+    click: 0
+  }
+  
+  games[roomName].users.push(newUser)
+  io.to(roomName).emit(roomName+'_update',games[roomName])
+
   // Connect the user to the socket
   io.on('connection', (socket) => {
     // Join the socket room
     socket.join(roomName)
     // If the user is new, add it
     users = io.sockets.adapter.rooms.get(roomName);
-    let userIndex = 0
-    if (!games[roomName].users.find((u) => (u.id == socket.id))){
-      const newUser = {
-        id: socket.id,
-        ready: false,
-        online: true,
-        name: '',
-        left: parseInt(Math.random() * 200),
-        click: 0
-      }
-      
-      games[roomName].users.push(newUser)
-      io.to(roomName).emit(roomName+'_update',games[roomName])
-    }
+    
 
     // When the user closes the session, i remove it from the game
     socket.on("disconnect", () => {
