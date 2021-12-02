@@ -13,9 +13,19 @@
         <div class="row">
 
 
-        <div class="home-button red">
+        <div class="menu-button red">
             <img src="food-strawberry.png" alt="">
             <div class="text inverso">
+                <span>E</span>
+                <span>G</span>
+                <span>A</span>
+                <span>P</span>
+                <span>E</span>
+                <span>M</span>
+                <span>O</span>
+                <span>H</span>
+            </div>
+            <!-- <div class="text reverso">
                 <span>H</span>
                 <span>O</span>
                 <span>M</span>
@@ -24,20 +34,10 @@
                 <span>A</span>
                 <span>G</span>
                 <span>E</span>
-            </div>
-            <div class="text reverso">
-                <span>H</span>
-                <span>O</span>
-                <span>M</span>
-                <span>E</span>
-                <span>P</span>
-                <span>A</span>
-                <span>G</span>
-                <span>E</span>
-            </div>
+            </div> -->
         </div>
 
-        <div class="home-button yellow">
+        <div class="menu-button yellow">
             <img src="food-strawberry.png" alt="">
             <div class="text inverso">
                 <span>H</span>
@@ -49,7 +49,7 @@
                 <span>G</span>
                 <span>E</span>
             </div>
-            <div class="text reverso">
+            <!-- <div class="text reverso">
                 <span>H</span>
                 <span>O</span>
                 <span>M</span>
@@ -58,10 +58,10 @@
                 <span>A</span>
                 <span>G</span>
                 <span>E</span>
-            </div>
+            </div> -->
         </div>
 
-        <div class="home-button blue">
+        <div class="menu-button blue">
             <img src="food-strawberry.png" alt="">
             <div class="text inverso">
                 <span>H</span>
@@ -73,7 +73,7 @@
                 <span>G</span>
                 <span>E</span>
             </div>
-            <div class="text reverso">
+            <!-- <div class="text reverso">
                 <span>H</span>
                 <span>O</span>
                 <span>M</span>
@@ -82,7 +82,7 @@
                 <span>A</span>
                 <span>G</span>
                 <span>E</span>
-            </div>
+            </div> -->
         </div>
 
         </div>
@@ -95,57 +95,40 @@
         let mousePos = new Uint16Array(32);
 
         const renderLines = () => {
+            const target = document.querySelector("body > div > div > div.menu-button.red > img").getBoundingClientRect();
+
+            let slicing = false;
+            let occurences = 0;
+
+            /**
+             * @param {number} x 
+             * @param {number} y 
+             */
+            const inside = (x, y) => {
+                return (x > target.left && x < target.right && y > target.top && y < target.bottom);
+            }
+
+            if (inside(mousePos[0], mousePos[1]) || inside(mousePos[30], mousePos[31])) occurences++;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath(); // I still don't understand what beginPath and closePath do
+            ctx.beginPath();
             ctx.moveTo(mousePos[0], mousePos[1]);
-            // ctx.lineTo(...point2);
             for (let i = 2; i < 32; i+=2) {
+                if (slicing === false && inside(mousePos[i], mousePos[i + 1])) {
+                    slicing = true;
+                    occurences++;
+                }
+                else if (slicing === true && !inside(mousePos[i], mousePos[i + 1])) {
+                    slicing = false;
+                    occurences++;
+                }
                 ctx.lineTo(mousePos[i], mousePos[i + 1]);
             }
-            // ctx.closePath();
             ctx.stroke();
             ctx.closePath();
 
-            const y1 = mousePos[29];
-            const x1 = mousePos[28];
-            const y2 = mousePos[31];
-            const x2 = mousePos[30];
-            const xDelta = x2 - x1;
-            const yDelta = y2 - y1;
-            const yIntercept = y1 - ((yDelta/xDelta)*x1);
-            const A = yDelta;
-            const B = -1*(xDelta);
-            const C = (xDelta)*yIntercept;
-
-            // /**
-            //  * @param {number} x 
-            //  * @param {number} y 
-            //  */
-            // const difference = (x, y) => {
-            //     return (A*x) + (B*y) + C;
-            // }
-
-            /**
-             * @param {DOMRect} target 
-             * @returns {boolean}
-             */
-            const slicedTarget = (target) => {
-                const topLeft = (A*target.left) + (B*target.top) + C;
-                const botRight = (A*target.right) + (B*target.bottom) + C;
-                return (topLeft > 0 && botRight < 0) || (botRight > 0 && topLeft < 0)
-            }
-
-            // const targetRect = document.querySelector("body > div > div > img").getBoundingClientRect();
-
-            // const topLeft = difference(targetRect.left, targetRect.top);
-            // const botRight = difference(targetRect.right, targetRect.bottom);
-            // const topRight = difference(targetRect.right, targetRect.top);
-            // const botLeftRight = difference(targetRect.left, targetRect.bottom);
-
-            if (slicedTarget(document.querySelector("body > div > div > img").getBoundingClientRect())) console.log("Yes!");
+            if (occurences === 1) console.log("YES!");
         }
-
-        // renderLines()
 
         const resizer = async () => {
             canvas.width = window.innerWidth;
@@ -156,7 +139,7 @@
         window.addEventListener("resize", resizer);
         resizer();
 
-        window.addEventListener("click", (event) => {
+        window.addEventListener("mousemove", (event) => {
             if (event.clientX === mousePos[30] && event.clientY === mousePos[31]) return;
 
             const newMousePos = new Uint16Array([...mousePos.slice(2), event.clientX, event.clientY]);
@@ -171,18 +154,6 @@
 
         //     renderLines();
         // }, 500)
-
-        setInterval(() => {
-            const targetRect = document.querySelector("body > div > div > img").getBoundingClientRect();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
-            ctx.arc(targetRect.left, targetRect.top, 5, 0, 2 * Math.PI);
-            ctx.arc(targetRect.right, targetRect.bottom, 5, 0, 2 * Math.PI);
-            ctx.arc(targetRect.left, targetRect.bottom, 5, 0, 2 * Math.PI);
-            ctx.arc(targetRect.right, targetRect.top, 5, 0, 2 * Math.PI);
-            ctx.fill("evenodd");
-            ctx.closePath();
-        }, 100);
     </script>
 </body>
 </html>
