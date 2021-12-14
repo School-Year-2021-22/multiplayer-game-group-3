@@ -4,7 +4,7 @@ const ctx = canvas.getContext("2d");
 let mousePos = new Uint16Array(32);
 
 const renderLines = () => {
-    const target = document.querySelector("body > div > div > div.menu-button.red > img").getBoundingClientRect();
+    const target = document.querySelector("body > div > div > div.home-button.home-button-red > img").getBoundingClientRect();
 
     let slicing = false;
     let occurences = 0;
