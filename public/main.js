@@ -36,7 +36,7 @@ const renderLines = () => {
     ctx.stroke();
     ctx.closePath();
 
-    if (occurences === 1) console.log("YES!");
+    if (occurences === 1) window.location.assign(`${window.location.protocol}//${window.location.host}/rooms/room1`)
 }
 
 const resizer = async () => {
