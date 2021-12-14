@@ -1,56 +1,22 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Socket.IO chat</title>
-    <link rel="stylesheet" href="/room.css">
-  </head>
-  <body>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room</title>
+    <!-- <link rel="stylesheet" href="/homepage.css"> -->
+</head>
+
+<body>
 
     <div class="app">
-
-      <h1>User index: {{userIndex}}</h1>
-      <button @click="moveUser(-50)">Left</button>
-      <button @click="moveUser(50)">Right</button>
-      <div class="container">
-        <div
-          class="user"
-          v-for="user, i in game.users"
-          :class="{
-            'active' : i == userIndex,
-            'offline' : user.online == false,
-          }"
-          :style="{
-            top: i*30 + 'px',
-            left: user.left+'px'
-          }"
-          :key="user.id"
-          ></div>
-      </div>
-
-      <pre id="users">
-        {{game}}
-      </pre>
-      <!-- <div id="test" style="min-height: 100vh;background: red">
-      </div> -->
-  
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://unpkg.com/vue@next"></script>
+    <canvas style="width: 100%; height: 100%; position: fixed; top: 0; left: 0;" id="myCanvas"></canvas>
+    <!-- <script defer src="/main.js">
+    </script> -->
 
-    <script>
-      const ROOM = '<%= room %>';
-      const GAME = '<%- JSON.stringify(game) %>';
-      const USER_INDEX = '<%= userIndex %>';
-      window.ROOM = ROOM;
-      window.GAME = GAME;
-      window.USER_INDEX = USER_INDEX;
-      Object.freeze(window.ROOM);
-      Object.freeze(window.GAME);
-      Object.freeze(window.USER_INDEX);
-    </script>
+</body>
 
-
-    <script src="/room.js"></script>
-      
-  </body>
 </html>
