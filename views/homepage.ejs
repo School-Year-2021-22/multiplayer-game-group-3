@@ -9,85 +9,57 @@
 </head>
 <body>
 
-    <div class="app" style="width: 100vw; height: 100vh;">
-        <div class="row">
+    <div class="app">
+        <div class="row-buttons">
 
-
-        <div class="menu-button red">
-            <img src="food-strawberry.png" alt="">
-            <div class="text inverso">
-                <span>E</span>
-                <span>G</span>
-                <span>A</span>
-                <span>P</span>
-                <span>E</span>
-                <span>M</span>
-                <span>O</span>
-                <span>H</span>
+            <div class="home-button home-button-red">
+                <img src="food-strawberry.png" alt="">
+                <div class="text inverso">
+                    <span>E</span>
+                    <span>G</span>
+                    <span>A</span>
+                    <span>P</span>
+                    <span>E</span>
+                    <span>M</span>
+                    <span>O</span>
+                    <span>H</span>
+                </div><div class="text reverso">
+                    <span>E</span>
+                    <span>G</span>
+                    <span>A</span>
+                    <span>P</span>
+                    <span>E</span>
+                    <span>M</span>
+                    <span>O</span>
+                    <span>H</span>
+                </div>
             </div>
-            <!-- <div class="text reverso">
-                <span>H</span>
-                <span>O</span>
-                <span>M</span>
-                <span>E</span>
-                <span>P</span>
-                <span>A</span>
-                <span>G</span>
-                <span>E</span>
-            </div> -->
-        </div>
-
-        <div class="menu-button yellow">
-            <img src="food-strawberry.png" alt="">
-            <div class="text inverso">
-                <span>H</span>
-                <span>O</span>
-                <span>M</span>
-                <span>E</span>
-                <span>P</span>
-                <span>A</span>
-                <span>G</span>
-                <span>E</span>
+            <div class="home-button home-button-blue">
+                <img src="watermelon.png" alt="">
+                <div class="text inverso">
+                    <span>L</span>
+                    <span>A</span>
+                    <span>N</span>
+                    <span>I</span>
+                    <span>G</span>
+                    <span>I</span>
+                    <span>R</span>
+                    <span>O</span>
+                </div>
             </div>
-            <!-- <div class="text reverso">
-                <span>H</span>
-                <span>O</span>
-                <span>M</span>
-                <span>E</span>
-                <span>P</span>
-                <span>A</span>
-                <span>G</span>
-                <span>E</span>
-            </div> -->
-        </div>
-
-        <div class="menu-button blue">
-            <img src="food-strawberry.png" alt="">
-            <div class="text inverso">
-                <span>H</span>
-                <span>O</span>
-                <span>M</span>
-                <span>E</span>
-                <span>P</span>
-                <span>A</span>
-                <span>G</span>
-                <span>E</span>
+            <div class="home-button home-button-yellow">
+                <img src="lemon.png" alt="">
+                <div class="text inverso">
+                    <span>H</span>
+                    <span>C</span>
+                    <span>T</span>
+                    <span>A</span>
+                    <span>W</span>
+                </div>
             </div>
-            <!-- <div class="text reverso">
-                <span>H</span>
-                <span>O</span>
-                <span>M</span>
-                <span>E</span>
-                <span>P</span>
-                <span>A</span>
-                <span>G</span>
-                <span>E</span>
-            </div> -->
-        </div>
-
         </div>
     </div>
-    <canvas style="width: 100%; height: 100%; position: fixed; top: 0; left: 0;" id="myCanvas"></canvas>
+    <canvas style="width: 100%; height: 100%;" id="myCanvas"></canvas>
     <script defer>
         const canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
@@ -95,40 +67,19 @@
         let mousePos = new Uint16Array(32);
 
         const renderLines = () => {
-            const target = document.querySelector("body > div > div > div.menu-button.red > img").getBoundingClientRect();
-
-            let slicing = false;
-            let occurences = 0;
-
-            /**
-             * @param {number} x 
-             * @param {number} y 
-             */
-            const inside = (x, y) => {
-                return (x > target.left && x < target.right && y > target.top && y < target.bottom);
-            }
-
-            if (inside(mousePos[0], mousePos[1]) || inside(mousePos[30], mousePos[31])) occurences++;
-
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
+            ctx.beginPath(); // I still don't understand what beginPath and closePath do
             ctx.moveTo(mousePos[0], mousePos[1]);
-            for (let i = 2; i < 32; i+=2) {
-                if (slicing === false && inside(mousePos[i], mousePos[i + 1])) {
-                    slicing = true;
-                    occurences++;
-                }
-                else if (slicing === true && !inside(mousePos[i], mousePos[i + 1])) {
-                    slicing = false;
-                    occurences++;
-                }
+            // ctx.lineTo(...point2);
+            for (let i = 2; i < 32; i++) {
                 ctx.lineTo(mousePos[i], mousePos[i + 1]);
+                i++; // This combined with the above i++ will move the index by 2 and not 1
             }
+            // ctx.closePath();
             ctx.stroke();
-            ctx.closePath();
-
-            if (occurences === 1) console.log("YES!");
         }
+
+        // renderLines()
 
         const resizer = async () => {
             canvas.width = window.innerWidth;
@@ -147,13 +98,6 @@
 
             renderLines();
         });
-
-        // let positionCache = 0;
-        // setInterval(() => {
-        //     const newMousePos = new Uint16Array([])
-
-        //     renderLines();
-        // }, 500)
     </script>
 </body>
 </html>
