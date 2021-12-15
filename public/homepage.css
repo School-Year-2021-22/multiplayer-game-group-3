@@ -19,11 +19,12 @@ body {
         transform: rotate(360deg)
     }
 }
-.title {
+.title  {
   padding: -20px;
-  width: 150px;
-  height: 50px;
+  width: 320px;
+  height: 215px;
   position: absolute;
+  top: 90px;
 }
 .app{
     max-width: 80%;
