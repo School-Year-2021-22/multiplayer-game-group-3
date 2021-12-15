@@ -1,16 +1,29 @@
-.container{
-  position: relative;
-}
-.user{
-  min-height: 30px;
-  min-width: 30px;
-  background-color: aqua;
-  position: absolute;
-}
+.fruit{
 
-.active{
+}
+.lemon{
+  min-height: 30px;
+  max-width: 30px;
   background-color: yellow;
 }
-.offline{
-  background-color: gray;
+.apple{
+
 }
+.watermelon{
+
+}
+.rotate-l{
+}
+.rotate-r{
+  animation: rotateR 10s linear infinite;  
+}
+
+
+@keyframes rotateR {
+  from{
+      transform: rotate(0deg)
+  }
+
+  to{
+      transform: rotate(360deg)
+  }
