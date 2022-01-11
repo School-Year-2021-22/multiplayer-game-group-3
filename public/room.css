@@ -5,10 +5,10 @@ body{
 .fruit{
 
 }
-.lemon{
-  min-height: 30px;
-  max-width: 30px;
-  background-color: yellow;
+.img-lemon{
+  width: 300px;
+  height: 200px;
+  background-image: url("img/lemon.png");
 }
 .apple{
 
