@@ -2,9 +2,6 @@ body{
  background-image: url("fruitninja.png");
 }
 
-.fruit{
-
-}
 .img-lemon{
   width: 300px;
   height: 200px;
@@ -23,12 +20,15 @@ body{
   background-position: center;
 }
 
+.food-strawberry{
+  width: 300px;
+  height: 200px;
+  background-image: url("food-strawberry.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-.watermelon{
 
-}
-.rotate-l{
-}
 .rotate-r{
   animation: rotateR 10s linear infinite;  
 }
@@ -42,3 +42,4 @@ body{
   to{
       transform: rotate(360deg)
   }
+}
