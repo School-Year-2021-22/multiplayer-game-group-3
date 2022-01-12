@@ -19,6 +19,11 @@ body {
         transform: rotate(360deg)
     }
 }
+.username-field{
+  position: absolute;
+  top: 40%;
+  z-index: 900909;
+}
 .title  {
   padding: -20px;
   width: 320px;

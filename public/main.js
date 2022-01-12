@@ -3,6 +3,15 @@ const ctx = canvas.getContext("2d");
 
 let mousePos = new Uint16Array(32);
 
+const enterGame = () => {
+    const userName = document.querySelector('#userName').value
+    if (userName) {
+        window.location.assign(`${window.location.protocol}//${window.location.host}/rooms/room1/${userName}`)
+    }else{
+        alert('add a name!')
+    }
+}
+
 const renderLines = () => {
     const target = document.querySelector("body > div > div > div.home-button.home-button-blue > img").getBoundingClientRect();
 
@@ -36,7 +45,10 @@ const renderLines = () => {
     ctx.stroke();
     ctx.closePath();
 
-    if (occurences === 1) window.location.assign(`${window.location.protocol}//${window.location.host}/rooms/room1`)
+    // if (occurences === 1) window.location.assign(`${window.location.protocol}//${window.location.host}/rooms/room1`)
+    if (occurences === 1) {
+        enterGame()
+    }
 }
 
 const resizer = async () => {
