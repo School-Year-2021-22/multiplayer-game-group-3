@@ -7,15 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room</title>
     <link rel="stylesheet" href="/room.css">
-    <script src="https://unpkg.com/vue@next"></script>
 </head>
 
 <body>
 
     <div class="app">
-        <div class="fruit apple rotate-l "></div>
+        <div class="fruit food-strawberry rotate-l "></div>
         <div class="fruit lemon rotate-r"></div>
         <div class="fruit watermelon rotate-r"></div>
+        <div class="fruit pineapple rotate-l "></div>
+
+        {{game}}
+        <button @click="cutFruit()">click</button>
     </div>
     <canvas style="width: 100%; height: 100%; position: fixed; top: 0; left: 0;" id="myCanvas"></canvas>
     <script defer>
@@ -23,6 +26,19 @@
     </script>
 <!--<img class="img-lemon" src="img/lemon.png" alt="lemon">-->
 <div class = "img-lemon"></div>
+
+<!--<img class="img-watermelon" src="img/watermelon.png" alt="watermelon">-->
+<div class = "img-watermelon"></div>
+
+<!--<img class="img-food-strawberry" src="img/strawberry.png" alt="food-strawberry">-->
+<div class = "img-food-strawberry"></div>
+
+<!--<img class="img-pineapple" src="img/pineapple.png" alt="pineapple">-->
+<div class = "img-pineapple"></div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="/room.js"></script>
+
 
 </body>
 

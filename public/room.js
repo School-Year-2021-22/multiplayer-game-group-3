@@ -15,6 +15,14 @@ const app = {
           left: this.game.users[this.userIndex].left + amount
         }
       })
+    },
+    cutFruit (amount) {
+      this.socket.emit(this.room + '_user_update', {
+        i: this.userIndex,
+        user: {
+          fruitCutted: this.game.users[this.userIndex].fruitCutted + 1
+        }
+      })
     }
   },
   mounted () {
