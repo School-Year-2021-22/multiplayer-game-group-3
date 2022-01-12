@@ -1,8 +1,14 @@
+
 body{
  background-image: url("/fruitninja.png");
 }
 
-.img-lemon{
+pre
+{
+  background-color: white;
+}
+
+.lemon{
   width: 300px;
   height: 200px;
   background-image: url("/lemon.png");
@@ -40,6 +46,11 @@ body{
 
 .rotate-r{
   animation: rotateR 10s linear infinite;  
+}
+
+.rotate-l{
+  animation: rotateR 10s linear infinite;  
+  animation-direction: reverse;
 }
 
 
