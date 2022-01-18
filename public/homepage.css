@@ -22,7 +22,8 @@ body {
 .username-field{
   position: absolute;
   top: 40%;
-  z-index: 900909;
+  left: 60%;
+  z-index: 100000000;
 }
 .title  {
   padding: -20px;
