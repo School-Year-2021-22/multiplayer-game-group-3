@@ -2,9 +2,9 @@ const app = {
   data () {
     return {
       socket: null,
-      counter: 0
+      counter: 0,
       // room: ROOM, //eslint-disable-line
-      // game: GAME, //eslint-disable-line
+      // game: GAME //eslint-disable-line
       // userIndex: USER_INDEX //eslint-disable-line
     }
   },

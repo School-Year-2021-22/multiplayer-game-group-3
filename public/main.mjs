@@ -6,8 +6,8 @@ let mousePos = new Uint16Array(32);
 const enterGame = () => {
     const userName = document.querySelector('#userName').value
     if (userName) {
-        window.location.assign(`${window.location.protocol}//${window.location.host}/rooms/room1/${userName}`)
-    }else{
+        window.location.assign(`${window.location.protocol}//${window.location.host}/rooms/${userName}`)
+    } else {
         alert('add a name!')
     }
 }
