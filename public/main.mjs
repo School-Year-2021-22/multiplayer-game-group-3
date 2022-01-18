@@ -70,7 +70,7 @@ window.addEventListener("mousemove", (event) => {
 function gameLoop() {
     // if (mousePos[0] === mousePos[30] && mousePos[1] === mousePos[31]) return;
 
-    const newMousePos = new Uint16Array([...mousePos.slice(4), mousePos[30], mousePos[31], mousePos[30], mousePos[31]]);
+    const newMousePos = new Uint16Array([...mousePos.slice(2), mousePos[30], mousePos[31]]);
     mousePos = newMousePos;
 
     renderLines();
