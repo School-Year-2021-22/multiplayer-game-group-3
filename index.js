@@ -5,7 +5,7 @@ const { Server, Socket } = require('socket.io')
  * @type {import("http").Server}
  */
 const http = require('http').Server(app)
-const io = Server(http)
+const io = new Server(http)
 const port = process.env.PORT || 3000
 // eslint-disable-next-line no-unused-vars
 // const development = process.env.NODE_ENV === 'development'
