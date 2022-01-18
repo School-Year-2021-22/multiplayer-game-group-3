@@ -65,9 +65,20 @@ window.addEventListener("mousemove", (event) => {
 
     const newMousePos = new Uint16Array([...mousePos.slice(2), event.clientX, event.clientY]);
     mousePos = newMousePos;
+});
+
+function gameLoop() {
+    // if (mousePos[0] === mousePos[30] && mousePos[1] === mousePos[31]) return;
+
+    const newMousePos = new Uint16Array([...mousePos.slice(4), mousePos[30], mousePos[31], mousePos[30], mousePos[31]]);
+    mousePos = newMousePos;
 
     renderLines();
-});
+
+    window.requestAnimationFrame(gameLoop);
+}
+
+window.requestAnimationFrame(gameLoop);
 
 // let positionCache = 0;
 // setInterval(() => {
