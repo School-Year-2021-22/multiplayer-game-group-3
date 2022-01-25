@@ -7,7 +7,7 @@ class CanvasUtils {
 
     /**
      * @param {HTMLCanvasElement} canvas 
-     * @param {Map<keyof HTMLElementTagNameMap, () => Promise<void>>} targetsMap
+     * @param {Map<(keyof HTMLElementTagNameMap | string), () => Promise<void>>} targetsMap
      */
     constructor(canvas, targetsMap) {
         this.#canvas = canvas;
@@ -85,7 +85,14 @@ class CanvasUtils {
             const targetQuery = target[0];
             const assFunction = target[1];
 
-            this.#checkObj(document.querySelector(targetQuery).getBoundingClientRect(), assFunction);
+            const domElement = document.querySelector(targetQuery);
+            if (domElement === null) {
+                console.error("Null dom element was passed to CanvasUtils, targetQuery: " + targetQuery)
+                this.#targetsMap.delete(targetQuery);
+                return;
+            }
+
+            this.#checkObj(domElement.getBoundingClientRect(), assFunction);
         }
     
         this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);

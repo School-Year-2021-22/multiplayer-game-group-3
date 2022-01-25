@@ -29,7 +29,7 @@ const app = {
       this.counter = serverCounter;
     })
 
-    new CanvasUtils(canvas, new Map([["body > div > div > div.home-button.home-button-blue > img", this.cutFruit]]));
+    new CanvasUtils(canvas, new Map([["body > div > div.fruit.food-strawberry.rotate-l", this.cutFruit], ["body > div > div.fruit.lemon.rotate-r", this.cutFruit], ["body > div > div.fruit.watermelon.rotate-r", this.cutFruit], ["body > div > div.fruit.pineapple.rotate-l", this.cutFruit]]));
   }
 }
 
