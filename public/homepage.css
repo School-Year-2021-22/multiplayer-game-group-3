@@ -21,10 +21,22 @@ body {
 }
 .username-field{
   position: absolute;
-  top: 40%;
-  left: 60%;
+  top: 30%;
+  left: 45%;
   z-index: 100000000;
+  padding: 0;
+  height: 30px;
+  outline: none;
+  border: 3px solid #131313;
+  border-color: rgba(51, 29, 3, 0.15);
+  background-color: blanchedalmond;
+  font-size: 16px;
+  font-family: 'Kumbh Sans', sans-serif;
 }
+
+
+
+
 .title  {
   padding: -20px;
   width: 320px;
