@@ -1,3 +1,7 @@
+import { CanvasUtils } from "./common.mjs";
+
+const canvas = document.getElementById("myCanvas");
+
 const app = {
   data () {
     return {
@@ -9,7 +13,7 @@ const app = {
     }
   },
   methods: {
-    cutFruit () {
+    async cutFruit () {
       this.socket.emit('_cut_fruit')
     }
   },
@@ -24,6 +28,8 @@ const app = {
     this.socket.on('_counter_update', (serverCounter) => {
       this.counter = serverCounter;
     })
+
+    new CanvasUtils(canvas, new Map([["body > div > div > div.home-button.home-button-blue > img", this.cutFruit]]));
   }
 }
 
