@@ -8,10 +8,14 @@ pre
   background-color: white;
 }
 
+.fruit img{
+  max-width: 60px;
+  height: auto;
+}
 
-.lemon{
-  width: 300px;
-  height: 200px;
+.lemon {
+  width: 200;
+  height: 100px;
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
@@ -20,15 +24,12 @@ pre
 .watermelon{
   width: 300px;
   height: 200px;
-  background-image: url("/watermelon.png");
+  /* background-image: url("/watermelon.png"); */
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
 }
-.fruit img{
-  max-width: 60%;
-  height: auto;
-}
+
 
 .food-strawberry{
   width: 200px;
