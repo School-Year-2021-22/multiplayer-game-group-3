@@ -8,10 +8,15 @@ pre
   background-color: white;
 }
 
+img {
+  width: inherit;
+  height: inherit;
+}
+
 
 .lemon {
-  width: 200;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
