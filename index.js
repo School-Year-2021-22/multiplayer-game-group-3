@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
-const { Server, Socket } = require('socket.io')
+const { Server, Socket } = require('socket.io') // eslint-disable-line
 /**
  * @type {import("http").Server}
  */
 const http = require('http').Server(app)
+const { randomUUID } = require('crypto')
+const { Fruits } = require('./public/common.mjs')
 const io = new Server(http)
 const port = process.env.PORT || 3000
 // eslint-disable-next-line no-unused-vars
@@ -17,39 +19,55 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('homepage')
+    res.render('homepage')
 })
 
 const games = {}
 app.get('/rooms/:gameId', (req, res) => {
-  const gameID = req.params.gameId
-  if (!games[gameID]) {
-    games[gameID] = {
-      game: {
-        counter: 0
-      }
+    const gameID = req.params.gameId
+    if (!games[gameID]) {
+        games[gameID] = {
+            game: {
+                counter: 0,
+                fruits: []
+            },
+            intervalFunc: null
+        }
     }
-  }
 
-  // For security reasons we shall refrence the roomObj using a special var to avoid TOCTOU attacks
-  const roomObj = games[gameID];
+    // For security reasons we shall refrence the roomObj using a special var to avoid TOCTOU attacks
+    const roomObj = games[gameID]
 
-  /**
-   * Socket handler logic that will handle counter updates and server io room join and leave
-   * @param {Socket} socket
-   */
-  const socketHandler = (socket) => {
-    socket.join(gameID)
-    socket.on('disconnect', () => socket.leave(gameID))
-    socket.on('_cut_fruit', () => {
-      roomObj.game.counter++;
-      io.to(gameID).emit('_counter_update', roomObj.game.counter)
-    })
-    socket.emit('_counter_update', roomObj.game.counter)
-  }
-  io.on('connection', socketHandler)
+    /**
+     * Socket handler logic that will handle counter updates and server io room join and leave
+     * @param {Socket} socket
+     */
+    const socketHandler = (socket) => {
+        socket.join(gameID)
+        socket.on('disconnect', () => socket.leave(gameID))
 
-  res.render('room')
+        if ((roomObj.intervalFunc ?? undefined) === undefined) {
+            const id = window.setInterval(async () => {
+                roomObj.game.fruits.push({
+                    id: (randomUUID()),
+                    type: Fruits.Lemon
+                })
+            })
+            roomObj.intervalFunc = id
+        }
+
+        socket.on('_cut_fruit', () => {
+            roomObj.game.counter++
+            io.to(gameID).emit('_counter_update', roomObj.game.counter)
+        })
+
+        socket.emit('_counter_update', roomObj.game.counter)
+
+        socket.emit('_fruit_list_update', roomObj.game.fruits)
+    }
+    io.on('connection', socketHandler)
+
+    res.render('room')
 })
 
 // WE HAVE DECIDED TO DO SINGLEPLAYER
@@ -128,5 +146,5 @@ app.get('/rooms/:gameId', (req, res) => {
 // })
 
 http.listen(port, () => {
-  console.log(`Socket.IO server running at http://localhost:${port}/`)
+    console.log(`Socket.IO server running at http://localhost:${port}/`)
 })
