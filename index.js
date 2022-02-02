@@ -1,3 +1,15 @@
+/**
+ * Type definitions for games and their roomObj
+ * @typedef {Object} fruitObj
+ * @property {string} fruitObj.id
+ * @property {Fruits} fruitObj.type
+ * @typedef {Object} roomObj
+ * @property {Object} game
+ * @property {number} game.counter
+ * @property {fruitObj[]} game.fruits
+ * @property {number} [intervalFunc]
+ */
+
 const express = require('express')
 const app = express()
 const { Server, Socket } = require('socket.io') // eslint-disable-line
@@ -6,7 +18,7 @@ const { Server, Socket } = require('socket.io') // eslint-disable-line
  */
 const http = require('http').Server(app)
 const { randomUUID } = require('crypto')
-const { Fruits } = require('./public/common.mjs')
+const { Fruits, sleep } = require('./public/common.js')
 const io = new Server(http)
 const port = process.env.PORT || 3000
 // eslint-disable-next-line no-unused-vars
@@ -36,6 +48,9 @@ app.get('/rooms/:gameId', (req, res) => {
     }
 
     // For security reasons we shall refrence the roomObj using a special var to avoid TOCTOU attacks
+    /**
+     * @type {roomObj}
+     */
     const roomObj = games[gameID]
 
     /**
@@ -44,15 +59,31 @@ app.get('/rooms/:gameId', (req, res) => {
      */
     const socketHandler = (socket) => {
         socket.join(gameID)
-        socket.on('disconnect', () => socket.leave(gameID))
+        socket.on('disconnect', () => {
+            socket.leave(gameID)
+        })
 
         if ((roomObj.intervalFunc ?? undefined) === undefined) {
-            const id = window.setInterval(async () => {
-                roomObj.game.fruits.push({
-                    id: (randomUUID()),
+            const id = setInterval(async () => {
+                await sleep(Math.random() * 5000)
+
+                const gameFruitId = randomUUID()
+                const fruitObj = {
+                    id: gameFruitId,
                     type: Fruits.Lemon
-                })
-            })
+                }
+
+                roomObj.game.fruits.push(fruitObj)
+                io.to(gameID).emit('_fruit_list_push', fruitObj)
+
+                await sleep(2500)
+
+                const possibleIndex = roomObj.game.fruits.findIndex((fruit) => fruit?.id ?? undefined === gameFruitId)
+                if (possibleIndex !== -1) {
+                    delete roomObj.game.fruits[possibleIndex]
+                    io.to(gameID).emit('_fruit_list_pop', gameFruitId)
+                }
+            }, 2500)
             roomObj.intervalFunc = id
         }
 

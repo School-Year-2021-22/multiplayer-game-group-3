@@ -133,20 +133,5 @@ class CanvasUtils {
     }
 }
 
-class Fruits {
-    static Strawberry = new Fruits('Strawberry')
-    static Lemon = new Fruits('Lemon')
-    static Watermelon = new Fruits('Watermelon')
-    static Pineapple = new Fruits('Pineapple')
-
-    constructor (name) {
-        this.name = name
-    }
-}
-
-module.exports = {
-    Fruits
-}
-
-export { CanvasUtils, Fruits }
+export { CanvasUtils }
 export default CanvasUtils
