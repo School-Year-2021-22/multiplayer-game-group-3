@@ -1,10 +1,10 @@
-
-body{
- background-image: url("/fruitninja.png");
+body {
+  background-image: url("/fruitninja.png");
+  width: 100%;
+  height: 100%;
 }
 
-pre
-{
+pre {
   background-color: white;
 }
 
@@ -13,6 +13,13 @@ img {
   height: auto;
 }
 
+.app {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 
 .lemon {
   width: 64px;

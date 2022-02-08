@@ -7,7 +7,7 @@ const app = {
         return {
             socket: null,
             counter: 0,
-            fruits: []
+            fruits: {}
             // room: ROOM, //eslint-disable-line
             // game: GAME //eslint-disable-line
             // userIndex: USER_INDEX //eslint-disable-line
@@ -20,6 +20,10 @@ const app = {
     },
     mounted () {
         const socket = window.io()
+        this.socket = socket
+        // Object.freeze(this.socket)
+
+        const canvasUtils = new CanvasUtils(canvas, new Map([['body > div > div.fruit.fruit-target', this.cutFruit]])) //eslint-disable-line
         // to send:
         // socket.emit('chat message', input.value);
         // this.socket.on(ROOM + '_update', (msg) => { //eslint-disable-line
@@ -36,19 +40,19 @@ const app = {
         })
 
         socket.on('_fruit_list_push', (fruitObj) => {
-            this.fruits.push(fruitObj)
-            console.log('pushed', fruitObj.id)
+            // this.fruits.push(fruitObj)
+            const pushedObj = Object.assign(fruitObj, { position: { x: Math.floor(Math.random() * canvasUtils.canvasSize.width), y: Math.floor(Math.random() * canvasUtils.canvasSize.height) } })
+            this.fruits[pushedObj.id] = pushedObj
+            // console.log('pushed', pushedObj.id)
             console.log(this.fruits)
         })
 
         socket.on('_fruit_list_pop', (id) => {
-            const possibleIndex = this.fruits.findIndex((fruit) => fruit?.id ?? undefined === id)
-            if (possibleIndex !== -1) delete this.fruits[possibleIndex]
-            console.log('popped', id)
+            const possibleIndex = Object.values(this.fruits).findIndex((fruit) => fruit?.id ?? undefined === id)
+            if (possibleIndex !== -1) /* delete this.fruits[possibleIndex] */ this.fruits.splice(possibleIndex, 1)
+            // console.log('popped', id)
             console.log(this.fruits)
         })
-
-        new CanvasUtils(canvas, new Map([['body > div > div.fruit.food-strawberry.rotate-l', this.cutFruit], ['body > div > div.fruit.lemon.rotate-r', this.cutFruit], ['body > div > div.fruit.watermelon.rotate-r', this.cutFruit], ['body > div > div.fruit.pineapple.rotate-l', this.cutFruit]])) //eslint-disable-line
     }
 }
 

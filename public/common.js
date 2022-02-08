@@ -7,6 +7,19 @@ class Fruits {
     constructor (name) {
         this.name = name
     }
+
+    static fruitNameToClass(name) {
+        switch (name) {
+            case 'Strawberry':
+                return this.Strawberry
+            case 'Lemon':
+                return this.Lemon
+            case 'Watermelon':
+                return this.Watermelon
+            case 'Pineapple':
+                return this.Pineapple
+        }
+    }
 }
 
 /**

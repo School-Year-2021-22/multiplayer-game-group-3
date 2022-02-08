@@ -33,7 +33,12 @@
         <div class="fruit food-strawberry rotate-l">
             <img src="/food-strawberry.png">
         </div>
-        <div class="fruit lemon rotate-r">
+        <div class="fruit fruit-target" v-for="fruit in fruits" :key="fruit.id">
+            <div style="position: absolute;" :style="{ top: fruit.position.y, left: fruit.position.x }">
+                <img src="/lemon.png">
+            </div>
+        </div>
+        <!-- <div class="fruit lemon rotate-r">
             <img src="/lemon.png">
         </div>
         <div class="fruit watermelon rotate-r">
@@ -41,7 +46,7 @@
         </div>
         <div class="fruit pineapple rotate-l">
             <img src="/pineapple.png">
-        </div>
+        </div> -->
     </div>
     <canvas style="width: 100%; height: 100%; position: fixed; top: 0; left: 0;" id="myCanvas"></canvas>
 <script src="/socket.io/socket.io.js"></script>

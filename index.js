@@ -80,7 +80,8 @@ app.get('/rooms/:gameId', (req, res) => {
 
                 const possibleIndex = roomObj.game.fruits.findIndex((fruit) => fruit?.id ?? undefined === gameFruitId)
                 if (possibleIndex !== -1) {
-                    delete roomObj.game.fruits[possibleIndex]
+                    // delete roomObj.game.fruits[possibleIndex]
+                    roomObj.game.fruits.splice(possibleIndex, 1)
                     io.to(gameID).emit('_fruit_list_pop', gameFruitId)
                 }
             }, 2500)

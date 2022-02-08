@@ -15,7 +15,7 @@ class CanvasUtils {
 
         this.#targetsMap = targetsMap
 
-        window.addEventListener('resize', this.resizer)
+        window.addEventListener('resize', () => this.resizer())
         this.resizer()
 
         window.addEventListener('mousemove', (event) => {
@@ -84,14 +84,16 @@ class CanvasUtils {
             const targetQuery = target[0]
             const assFunction = target[1]
 
-            const domElement = document.querySelector(targetQuery)
-            if (domElement === null) {
+            const domElements = document.querySelectorAll(targetQuery)
+            if (domElements.length === 0) {
                 // console.error("Null dom element was passed to CanvasUtils, targetQuery: " + targetQuery)
                 // this.#targetsMap.delete(targetQuery);
                 return
             }
 
-            this.#checkObj(domElement.getBoundingClientRect(), assFunction)
+            for (const domElement of domElements) {
+                this.#checkObj(domElement.getBoundingClientRect(), assFunction)
+            }
         }
 
         this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
@@ -130,6 +132,10 @@ class CanvasUtils {
         this.renderLines()
 
         window.requestAnimationFrame(() => this.gameLoop())
+    }
+
+    get canvasSize () {
+        return { width: this.#canvas.width, height: this.#canvas.height }
     }
 }
 
