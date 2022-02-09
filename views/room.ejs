@@ -33,9 +33,6 @@
         <div class="fruit food-strawberry rotate-l">
             <img src="/food-strawberry.png">
         </div>
-        <pre>
-            {{fruits}}
-        </pre>
         <div class="fruit fruit-target" v-for="fruit in fruits" :key="fruit.id">
             <div style="position: absolute;" :style="{ top: fruit.position.y+'px', left: fruit.position.x+'px' }">
                 <img src="/lemon.png">
