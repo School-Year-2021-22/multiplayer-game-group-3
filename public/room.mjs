@@ -34,10 +34,10 @@ const app = {
             this.counter = serverCounter
         })
 
-        socket.once('_fruit_list_update', (fruits) => {
-            this.fruits = fruits
-            console.log('Received fruit list update event')
-        })
+        // socket.once('_fruit_list_update', (fruits) => {
+        //     this.fruits = fruits
+        //     console.log('Received fruit list update event')
+        // })
 
         socket.on('_fruit_list_push', (fruitObj) => {
             // this.fruits.push(fruitObj)
@@ -48,8 +48,9 @@ const app = {
         })
 
         socket.on('_fruit_list_pop', (id) => {
-            const possibleIndex = Object.values(this.fruits).findIndex((fruit) => fruit?.id ?? undefined === id)
-            if (possibleIndex !== -1) /* delete this.fruits[possibleIndex] */ this.fruits.splice(possibleIndex, 1)
+            // const possibleIndex = Object.values(this.fruits).findIndex((fruit) => fruit?.id ?? undefined === id)
+            delete this.fruits[id]
+            // if (possibleIndex !== -1) /* delete this.fruits[possibleIndex] */ this.fruits.splice(possibleIndex, 1)
             // console.log('popped', id)
             console.log(this.fruits)
         })

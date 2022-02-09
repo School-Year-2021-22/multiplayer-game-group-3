@@ -76,7 +76,7 @@ app.get('/rooms/:gameId', (req, res) => {
                 roomObj.game.fruits.push(fruitObj)
                 io.to(gameID).emit('_fruit_list_push', fruitObj)
 
-                await sleep(2500)
+                await sleep(10000)
 
                 const possibleIndex = roomObj.game.fruits.findIndex((fruit) => fruit?.id ?? undefined === gameFruitId)
                 if (possibleIndex !== -1) {
